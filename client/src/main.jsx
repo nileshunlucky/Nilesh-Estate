@@ -13,6 +13,7 @@ import { store, persistor } from './redux/store.js'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import SignUp from './pages/SignUp.jsx'
+import CreateListing from './pages/CreateListing.jsx'
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
           {
             path: '/profile',
             element: <Profile />
+          },
+          {
+            path: '/create-listing',
+            element: <CreateListing />
           }
         ]
       }

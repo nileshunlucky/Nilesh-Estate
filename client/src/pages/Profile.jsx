@@ -178,11 +178,12 @@ export default function Profile() {
         />
         <button
           disabled={loading}
-          className='bg-zinc-900 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'
+          className='bg-zinc-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'
         >
           {loading ? 'Loading...' : 'Update'}
         </button>
       </form>
+      <Link to={'/create-listing'}><button className='bg-zinc-900 text-white rounded-lg p-3 uppercase hover:opacity-95 mt-3 w-full'>Create Listing</button></Link>
       <div className='flex justify-between mt-5'>
         <span onClick={handleDeleteAccount} className='text-red-700 cursor-pointer' >Delete account</span>
         <span onClick={handleSignOut} className='text-red-700 cursor-pointer'> Sign out</span>
