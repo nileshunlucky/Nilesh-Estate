@@ -15,7 +15,7 @@ const listingSchema = new mongoose.Schema(
             required: true,
         },
         type: {
-            type: Boolean,
+            type: String,
             required: true,
         },
         parking: {
@@ -31,19 +31,19 @@ const listingSchema = new mongoose.Schema(
             required: true,
         },
         bedrooms: {
-            type: Boolean,
+            type: Number,
             required: true,
         },
         bathrooms: {
-            type: Boolean,
+            type: Number,
             required: true,
         },
         regularPrice: {
-            type: Boolean,
+            type: Number,
             required: true,
         },
         discountedPrice: {
-            type: Boolean,
+            type: Number,
             required: true,
         },
         image: {
