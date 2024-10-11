@@ -29,7 +29,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [showListingsError, setShowListingsError] = useState(false);
-  const [userListings, setUserListings] = useState([]);
+  const [showListings, setShowListings] = useState([])
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -123,6 +123,42 @@ export default function Profile() {
     }
   }
 
+
+  const handleShowListings = async () => {
+    try {
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      if (!res.ok) {
+        setShowListingsError(true);
+        return;
+      }
+      const data = await res.json();
+      if (data.success === false) {
+        setShowListingsError(true);
+        return;
+      }
+      setShowListings(data);
+    } catch (error) {
+      setShowListingsError(true);
+    }
+  };
+
+  const handleListingDelete = async (listingId) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setShowListings((prev) =>
+        prev.filter((listing) => listing._id !== listingId)
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7 italic'>Profile</h1>
@@ -138,7 +174,7 @@ export default function Profile() {
           onClick={() => fileRef.current.click()}
           src={formData.image || currentUser.image}
           alt='profile'
-          className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
+          className='rounded-full h-20 w-20 object-cover cursor-pointer self-center mt-2'
         />
         <p className='text-sm self-center'>
           {fileUploadError ? (
@@ -193,6 +229,48 @@ export default function Profile() {
       <p className='text-green-700 mt-5 text-center'>
         {updateSuccess ? 'User is updated successfully!' : ''}
       </p>
+      <p onClick={handleShowListings} className='text-center mt-5 text-zinc-500 hover:underline hover:text-zinc-800 cursor-pointer'>Show Listings</p>
+      {showListingsError && <p className='text-red-700 mt-5 text-center'>Error while fetching listings</p>}
+      {showListings && showListings.length > 0 && (
+        <div className='flex flex-col gap-4'>
+          <h1 className='text-center mt-7 text-2xl font-semibold'>
+            Your Listings
+          </h1>
+          {showListings.map((listing) => (
+            <div
+              key={listing._id}
+              className='border rounded-lg p-3 flex justify-between items-center gap-4'
+            >
+              <Link to={`/listing/${listing._id}`}>
+                <img
+                  src={listing.imageUrls[0]}
+                  alt='listing cover'
+                  className='h-16 w-16 object-contain'
+                />
+              </Link>
+              <Link
+                className='text-slate-700 font-semibold  hover:underline truncate flex-1'
+                to={`/listing/${listing._id}`}
+              >
+                <p>{listing.name}</p>
+              </Link>
+
+              <div className='flex flex-col gap-2 justify-center item-center'>
+                <button
+                  onClick={() => handleListingDelete(listing._id)}
+                  className='bg-red-600 text-white p-1 px-3 rounded-lg uppercase'
+                >
+                  Delete
+                </button>
+                <Link to={`/update-listing/${listing._id}`}>
+                  <button className='bg-zinc-800 text-white hover:bg-zinc-500 rounded-lg p-1 w-full uppercase'>Edit</button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
     </div>
   );
 }
