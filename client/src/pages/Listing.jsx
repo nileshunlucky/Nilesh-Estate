@@ -50,7 +50,7 @@ const Listing = () => {
             {loading && <h1 className="text-3xl text-center my-12">Loading...</h1>}
             {error && <h1 className="text-3xl text-red-700 text-center my-12">Something went wrong...</h1>}
             {listing && !loading && !error && (
-                <div className="border">
+                <div key={listing._id} className="border">
                     {listing.imageUrls.map((url, index) => (
                         <Slider {...settings}>
                             <div key={index} >

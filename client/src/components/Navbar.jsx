@@ -33,7 +33,7 @@ const Navbar = () => {
       </div>
       <div className="search">
         <form onSubmit={hundleSubmit} className='bg-zinc-100 p-2 rounded flex justify-between items-center'>
-          <input onChange={e => setSearchTerm(e.target.value)} className='lg:w-[500px] w-[100px] focus:outline-none bg-transparent' type="text" placeholder="Search" />
+          <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='lg:w-[500px] w-[100px] focus:outline-none bg-transparent' type="text" placeholder="Search" />
           <button>
             <i className="fa-solid fa-magnifying-glass text-zinc-600 cursor-pointer px-3 text-[17px]"></i>
           </button>

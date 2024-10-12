@@ -16,6 +16,7 @@ import SignUp from './pages/SignUp.jsx'
 import CreateListing from './pages/CreateListing.jsx'
 import UpdateListing from './pages/UpdateListing.jsx'
 import Listing from './pages/Listing.jsx'
+import Search from './pages/Search.jsx'
 
 const router = createBrowserRouter([
   {
@@ -58,8 +59,12 @@ const router = createBrowserRouter([
       {
         path: '/listing/:listingId',
         element: <Listing />
-      }
-    ],
+      },
+      {
+        path: '/search',
+        element: <Search />
+      },
+    ]
   },
   {
     path: '*',
